@@ -49,6 +49,7 @@ int main()
 		area = area*pi;
 
 		printf("El area del circulo de radio %f es %f",r,area);
+		break;
 	case 3: //Ejercicio 3
 
 		printf("Ejercicio 3: Ingresar dos números por pantalla, multiplicarlos y devolver el resultado.\n\n");
@@ -61,13 +62,85 @@ int main()
 		printf("Ingrese 2do Numero\n");
 		scanf("%f",&numero2);
 		printf("El producto de %f por %f es: %f",numero1,numero2,(numero1*numero2));
+		break;
 	case 4: //Ejercicio 4
 
 		printf("Ejercicio 4: Calcular el promedio de un estudiante en una materia con tres exámenes\n\n");
 
 		//Codigo
 		float promedio = 0;
-		
+		float nota = 0; 
+
+		for (size_t i = 1; i < 4; i++)
+		{
+			printf("Ingrese la nota del examen numero %i\n",i);
+			scanf("%f",&nota);
+			promedio+=nota;
+		}
+		promedio/=3;
+		printf("El promedio de sus examenes es: %f\n",promedio);
+		break;
+	case 5: //Ejercicio 5
+
+		printf("Ejercicio 4: Ingresar una nota y verificar si un alumno aprobó o desaprobó un examen.\n\n");
+
+		//Codigo
+
+		float nota = 0;
+		printf("Ingrese la nota de su examen\n");
+		scanf("f",&nota);
+		if (nota >=6.0)
+		{
+			printf("Examen Aprobado\n");
+		}else{
+			printf("Examen Desaprobado\n");
+		}
+		break;
+	case 6: //Ejercicio Comp 1
+
+		printf("Ejercicio Complementario 1: Se le solicita al usuario ingresar una número entero, \
+		e imprimir por pantalla el número en forma de texto. Por ejemplo, si se ingresa el 4, el programa debe imprimir por pantalla \"cuatro\".\n\n");
+
+		//Codigo
+		int n = 0;
+		printf("Ingrese un numero del 0 al 9 y le diremos como se escribe en letras");
+		scanf("%i",&n);
+
+		switch (n)
+		{
+		case 0:
+			printf("cero");
+			break;
+		case 1:
+			printf("uno");
+			break;
+		case 2:
+			printf("dos");
+			break;
+		case 3:
+			printf("tres");
+			break;
+		case 4:
+			printf("cuatro");
+			break;
+		case 5:
+			printf("cinco");
+			break;
+		case 6:
+			printf("seis");
+			break;
+		case 7:
+			printf("siete");
+			break;
+		case 8:
+			printf("ocho");
+			break;
+		case 9:
+			printf("nueve");
+			break;
+		default:
+			break;
+		}
 
 	default:
 		break;
