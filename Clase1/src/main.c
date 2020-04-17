@@ -86,7 +86,7 @@ int main()
 
 		//Codigo
 
-		float nota = 0;
+		nota = 0;
 		printf("Ingrese la nota de su examen\n");
 		scanf("f",&nota);
 		if (nota >=6.0)
@@ -141,8 +141,31 @@ int main()
 		default:
 			break;
 		}
+	case 7: //Ejercicio Comp 2
 
+			//Codigo
+			printf("Ejercicio Complementario 2: Probar que sucede si intentamos imprimir un número con \%c en lugar de con \%d. Probar qué sucede si imprimimos con %d un carácter.\n\n");
+			printf("a)se va a intentar imprimir '1' con '\%c' y, luego,\nb) 'a' con '\%d'.- \n\n");
+			printf("a) %c\n",1);
+			printf("b) %d\n",'a');
+			break;
+	case 8://Ejercicio Comp 3
+
+			//Codigo
+			char prueba;
+			printf("Ejercicio Complementario 3: Probar que sucede si intentamos leer con scanf, dos caracteres seguidos. Probar usar dos scanf separados. Luego imprimirlos.\n\n");
+			printf("(Con un solo scanf() ): Ingrese 2 caracteres seguidos, puede ser 'aa' a modo de ejemplo y se intentara imprimir por pantalla los 2 caracteres.");
+			scanf("%c",&prueba);
+			printf("%c",prueba);
+			printf("(Con dos scanf() ): Ingrese 2 caracteres seguidos, puede ser 'aa' a modo de ejemplo y se intentara imprimir por pantalla los 2 caracteres.");
+			scanf("%c",&prueba);
+			scanf("%c",&prueba);
+			printf("%c",prueba);
+			break;
 	default:
+		//Salir
+		printf("Programa Terminado, pulse una tecla para salir.");
+		getchar();
 		break;
 	}
 
