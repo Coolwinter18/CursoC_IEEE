@@ -142,15 +142,16 @@ int main()
 			break;
 		}
 	case 7: //Ejercicio Comp 2
-
+			{
 			//Codigo
 			printf("Ejercicio Complementario 2: Probar que sucede si intentamos imprimir un número con \%c en lugar de con \%d. Probar qué sucede si imprimimos con %d un carácter.\n\n");
 			printf("a)se va a intentar imprimir '1' con '\%c' y, luego,\nb) 'a' con '\%d'.- \n\n");
 			printf("a) %c\n",1);
 			printf("b) %d\n",'a');
+			}
 			break;
 	case 8://Ejercicio Comp 3
-
+			{
 			//Codigo
 			char prueba;
 			printf("Ejercicio Complementario 3: Probar que sucede si intentamos leer con scanf, dos caracteres seguidos. Probar usar dos scanf separados. Luego imprimirlos.\n\n");
@@ -161,6 +162,7 @@ int main()
 			scanf("%c",&prueba);
 			scanf("%c",&prueba);
 			printf("%c",prueba);
+			}
 			break;
 	default:
 		//Salir

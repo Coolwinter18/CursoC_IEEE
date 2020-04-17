@@ -4,20 +4,20 @@
 
 int main()
 {
-	int inicioComplementarios = 7;
-	int finComplementarios = 8;
+	int inicioComplementarios = 6;
+	int finComplementarios = 7;
 	int op = 0;
 	int j, numero;
 	int divisores;
 	int dividendos;
 	do{
-		for (size_t i = 1; i < inicioComplementarios; i++)
+		for (size_t i = 1; i <= inicioComplementarios; i++)
 		{
 			printf("%i) Ejercicio Nro:%i \n",i,i);
 		}
 		;
 		j = 1;
-		for (size_t i = inicioComplementarios; i < finComplementarios; i++)
+		for (size_t i = inicioComplementarios; i <= finComplementarios; i++)
 		{
 			printf("%i) Ejercicio Complementario Nro:%i \n",i,j);
 			j++;
@@ -32,48 +32,50 @@ int main()
 	
 	{
 	case 1: //Ejercicio 1
-		printf("Ejercicio 1: Crear un menú de opciones para una calculadora.//switch\n\n");
-
-		//Codigo
-		char op[][255] = {"suma","resta","multiplicacion","division","potencia","raiz"};
-		
-		for (size_t i = 0; i < sizeof(op)/sizeof(op[0]); i++)
 		{
-			printf("%i) %s\n",i+1,op[i]);
-		}
-		int select;
-		do{
-		printf("Ingrese el numero de operacion");
-		scanf("%d",&select);
-		}while(select < 1 || select > (sizeof(op)));
+			printf("Ejercicio 1: Crear un menú de opciones para una calculadora.//switch\n\n");
 
-		switch (select)
-		{
-		case 1:
-			printf("Suma\n");
-			break;
-		case 2:
-			printf("Resta\n");
-			break;
-		case 3:
-			printf("Multiplicacicon\n");
-			break;
-		case 4:
-			printf("Division\n");
-			break;
-		case 5:
-			printf("Potencia\n");
-			break;
-		case 6:
-			printf("Raiz\n");
-			break;
-		default:
-			break;
+			//Codigo
+			char op[][255] = {"suma","resta","multiplicacion","division","potencia","raiz"};
+			
+			for (size_t i = 0; i < sizeof(op)/sizeof(op[0]); i++)
+			{
+				printf("%i) %s\n",i+1,op[i]);
+			}
+			int select;
+			do{
+			printf("Ingrese el numero de operacion");
+			scanf("%d",&select);
+			}while(select < 1 || select > (sizeof(op)));
+
+			switch (select)
+			{
+			case 1:
+				printf("Suma\n");
+				break;
+			case 2:
+				printf("Resta\n");
+				break;
+			case 3:
+				printf("Multiplicacicon\n");
+				break;
+			case 4:
+				printf("Division\n");
+				break;
+			case 5:
+				printf("Potencia\n");
+				break;
+			case 6:
+				printf("Raiz\n");
+				break;
+			default:
+				break;
+			}
 		}
 	break;
 
 	case 2: // Ejercicio 2
-
+			{
 			printf("Ejercicio 2: Calcular el factorial de un número.//for\n\n");
 			
 			//Codigo
@@ -85,11 +87,11 @@ int main()
 				factorial*=i;
 			}
 			printf("El factorial de %i es: %i",numero,factorial);
-
+			}
 	break;
 
 	case 3: //Ejercicio 3
-
+			{
 			printf("Ejercicio 3: Ingresar un número, determinar si es primo.//while\n\n");
 			
 			//Codigo
@@ -115,10 +117,11 @@ int main()
 			{
 				printf("No es Primo\n");
 			};
+			}
 	break;		
 
 	case 4: //Ejercicio 4
-
+			{
 			printf("Ejercicio 4: Imprimir los primeros n números primos.//tarea\n\n");
 
 			//Codigo
@@ -143,10 +146,12 @@ int main()
 					printf("%i, ",i);
 			}
 			printf("\n");
+			}
+			}
 	break;
 
 	case 5: //Ejercicio 5
-
+			{
 			printf("Ejercicio 5: Cargar un arreglo con números ingresados por el usuario, al final, mostrarlos en el sentido inverso al que fueron cargados. //primero, en clase mostrarlos al derecho.\n\n");
 
 			//Codigo
@@ -174,10 +179,14 @@ int main()
 				}
 			};
 			printf("\n");
+			}
 	break;
 
 	default:
-
-	break;
+	{
+		
 	}
-}return 0;
+	break;};
+
+return (0);
+	}
