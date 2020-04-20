@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
 
 int main()
 {
@@ -182,11 +184,110 @@ int main()
 			}
 	break;
 
-	default:
+	case 6: //Ejercicio 6
 	{
+		printf("Ejercicio 6: Solicitar un nombre al usuario, chequear que la primera letra esté en mayúsculas,\
+		 si estuviese en minúsculas, pasar dicha letra a mayúsculas. Comprobar que no posea espacios ni números. //string.h\n\n");
+
+		//Codigo
+		char* cadena[] = NULL;
+		char* restrictions[] = {'0','1','2','3','4','5','6','7','8','9',' '};
+		short band = 1;
+
+		printf("Ingrese Nombre de Usuario: \n");
+		scanf("%s",&cadena);
+		getchar();
+		for (size_t i = 0; i < strlen(cadena); i++)
+		{
+		
+			for (size_t j = 0; i < strlen(restrictions); i++)
+			{
+				if(cadena[i]==restrictions[j])
+				{
+					band = 0;
+				}
+			}
+			
+		}
+		if (band)
+		{
+			printf("Cadena correcta, su nombre de usuario es: \n");
+			if (!isupper(cadena[0]))
+			{
+				cadena[0]=toupper(cadena[0]);
+			}
+		}else{
+			printf("Su cadena no cumple con los requisitos.");
+			break;
+		}
+		printf(" %s ",cadena);
+		
+
+
+	}
+	break;
+
+	case 7: //Ejercicio 1 Complementario
+	{
+		printf("Ejercicio 1 Complementario: Crear una calculadora (ejercicio libre, realizar como se prefiera)\n\n");
+		//Codigo
+		printf("Calculadora 1.0: Admite Ejercicios de Suma, Resta, Multiplicacion, Division y Potencia, (recordar que la raiz es potencia fraccionaria)");
+		char* operaciones[][50] = {"Suma", "Resta", "Producto","Division","Potencia","Salir"};
+		int input;
+		do{
+			printf("Seleccione la operacion a realizar (1-5): [Ingrese 6 para Salir]\n");
+			for (size_t i = 0; i < strlen(operaciones); i++)
+			{
+				printf("%i) %i",i+1,operaciones[i]);
+			}
+			scanf("%d",input);
+			float a,b, result = 0;
+			if (input > 0 && input < 6)
+			{
+				printf("Ingrese ambos numeros separados por un espacio en blanco'a b' ejemplo '12 254']:\n");
+				scanf("%f %f",&a,&b);
+				printf("El resultado de la operacion es:\n");
+			}
+			
+			switch (input)
+			{
+				case 1: // Suma
+				{
+					result = a + b;
+				}
+				break;
+				case 2: //Resta
+				{
+					result = a - b;
+				}
+				case 3: //Producto
+				{
+					result = a * b;
+				}
+				break;
+				case 4: //Division
+				{
+					result = a / b;
+				}
+				break;
+				case 5: //Potencia
+				{
+					result = (float)pow(a,b);
+				}
+				default:
+					break;
+			}
+		printf("%f \n Pulse una tecla para volver al menu principal",result);
+		getchar();
+		}while(input != 6);
+		
 		
 	}
-	break;};
-
-return (0);
+	default:
+	{
+		break;
 	}
+	break;
+	};
+
+return (0);}
