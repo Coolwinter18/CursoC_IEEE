@@ -1,6 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <ctype.h>
+#include <string.h>
+int* ContadorString(char DataString[])
+{
+	static int arreglo[3] = {0,0,0};
+		for (size_t i = 0; i < strlen(DataString); i++)
+		{
+			if (DataString[i]==' ')
+			{
+				arreglo[0]+=1;
+			}else
+			{
+				if (isalpha(DataString[i]))
+				{
+					if (isupper(DataString[i]))
+					{
+						arreglo[1]++;
+					}else
+					{
+						arreglo[2]++;
+					}
+					
+					
+				}
+				
+			}
+		}
+		return arreglo;
+}
 int main()
 {
 	int inicioComplementarios = 6;
@@ -60,16 +88,25 @@ int main()
 		//Codigo
 		float array[10]={1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};
 		float *pointer = &array[9];
-		while(pointer +1 != &array[0])
+		int array2[10]={1,2,3,4,5,6,7,8,9,10};
+		int *pointer2 = &array2[9];
+		for (size_t i = 0; i < 10; i++)
 		{
-			printf("%d\n",*pointer);
+			printf("%f\n",*pointer);
+			printf("%d\n",*pointer2);
 			pointer--;
+			pointer2--;
 		}
-		
-
-
 	}
 	break;
+	case 3: //Ejercicio 3
+	{
+		printf("Ejercicio 3: Crear una función que realice lo mismo que el ejercicio 3.2,\n");
+		printf("la función debe devolver el arreglo que almacena las cantidades de espacios, mayusculas y minusculas.\n\n");
+		int *point = ContadorString("Hola Mundo");
+		printf("%p",point);
+
+	}
 	default:
 	{
 
