@@ -27,20 +27,6 @@ void borrarLista(tpuntero *cabeza){
         free(actual); //Se libera la memoria de la posicion de Actual (el primer nodo), y cabeza queda apuntando al que ahora es el primero
     }
 }
-
-////////////////////////////////////////////////////////////////////
-
-
-include <stdio.h>
-#include <stdlib.h>
- 
-typedef struct snodo{
-    int valor;
-    struct snodo *sig;
-} tnodo;
- 
-typedef tnodo *tpuntero;
- 
 void imprimirLista(tpuntero cabeza);
 void borrarLista (tpuntero *cabeza);
  
@@ -93,7 +79,8 @@ void borrarLista(tpuntero *cabeza){
     }
 }
 */
-typedef struct node //definition of node
+
+typedef struct node
 {
 	int data;
 	struct node *next;
@@ -105,119 +92,149 @@ typedef struct list
 	node *header;
 	node *next;
 	unsigned short index;
-} list;
+} vector, queue, stack;
 
-typedef struct queue //definition of queue
+/**
+ * @brief Create a Node object
+ * 
+ * @param temp 
+ * @return node* 
+ */
+node *createNode(node *temp)
 {
-	node *header;
-	node *next;
-	node *last;
-	unsigned short index;
-} queue;
-
-node *createNode()
-{
-	node *temp;									// declare a node
-	temp = (node *)malloc(sizeof(struct node)); // allocate memory using malloc()
-	temp->next = NULL;							// make next point to NULL
-	return temp;								//return the new node
+	temp = (node *)malloc(sizeof(node));
+	temp->next = NULL;
+	return temp;
 }
 
 /**
- * @brief Function that add an element to a linked list
+ * @brief Create a Vector object
  * 
- * @param pointer: header of the list
+ * @param temp 
+ * @return vector* 
+ */
+vector *createVector(vector *temp)
+{
+	temp = (vector *)malloc(sizeof(struct list));
+	temp->header = NULL;
+	temp->next = NULL;
+	temp->index = 0;
+	temp->next = NULL;
+	return temp;
+}
+
+/**
+ * @brief Function that add an element to a Vector, it adds at the end
+ * 
+ * @param pointer: header of the vector
  * @param value:  the 'value' to add
  */
-void addElementToList(list *pointer /**< [in] docs for input parameter *pointer. */, int value)
+void addElementToVector(vector *aVector, int value)
 {
-
-	node *newNode = createNode(); //< It creates a new empty node.
+	printf("Agregando Elemento..\n");
+	node *newNode = createNode(newNode);
 	newNode->data = value;
-
-	if (pointer->header == NULL)
+	newNode->next = NULL;
+	if (aVector->header == NULL)
 	{
-		//Primer Elemento
-		newNode->next = NULL;
+		///Primer Elemento
+		aVector->header = newNode;
+		aVector->next = NULL;
 	}
 	else
 	{
-		//i-esimo elemento.
-		newNode->next = pointer->header;
+		///i-esimo elemento.
+		node *pos = aVector->header;
+		while(pos->next != NULL)
+		{
+			pos = pos->next; 
+		}
+		pos ->next =  newNode;
 	}
-	pointer->header = newNode;
+	aVector->index ++;
 }
-
-void removeElementFromList(list *pointer, int index)
+/**
+ * @brief Procedure that removes an element from the vector, given an index of position in vector.
+ * 
+ * @param pointer 
+ * @param index 
+ */
+void delElementFromVector(vector *pointer, unsigned short index)
 {
-	if (pointer->header == NULL || index > (pointer->index))
+	if (index > (pointer->index))
 	{
-		//lista Vacia o fuera de rango
-		printf("Error, lista vacia o fuera de rango, intente de nuevo.");
-	}
+		//Vector vacio o indice fuera de rango
+		printf("Error, vector vacio o fuera de rango\n");
+	}	
 	else
 	{
 		node *remove = pointer->header;
-		if (!pointer->index == 1)
+		while (index != 1)
 		{
-			//eliminar nodo respecto a su indice.
-			while (index > 1)
+			///buscar nodo respecto a su indice.
+			remove = remove->next;
+			index--;
+		}
+		if (remove == pointer->header)
+		{
+			///borrar primer elemento del Vector
+			if (index == 1)
 			{
-				remove = remove->next;
-				index--;
+				///borrar unico elemento
+				pointer->header = NULL;
+				pointer->next=NULL;
+			}else
+			{
+				pointer->header=(pointer->header)->next;
 			}
-
-			remove->next = (remove->next)->next;
-		}
-	}
-}
-
-void addElementToQueue(queue *pointer, int value)
-{
-	node *newNode = (node *)malloc(sizeof(node));
-	newNode->data = value;
-	//newNode->previus = NULL;
-	if (pointer->header == NULL)
-	{
-		//Primer elemento
-		pointer->header = newNode;
-		pointer->last = newNode;
-		pointer->index = 1;
-		newNode->next = NULL;
-	}
-	else
-	{
-		//n-esimo elemento.
-		newNode->next = pointer->header;
-		//(pointer->header)->previus = newNode;
-		pointer->index += 1;
-	}
-	pointer->header = newNode;
-}
-void removeElementFromQueue(queue *pointer)
-{
-	if (pointer->header == NULL)
-	{
-		//No Hay elementos
-		printf("Error, no elements to dispose.");
-	}
-	else
-	{
-		if (pointer->header == pointer->last)
+			pointer->header = (pointer->header) ->next;
+		}else
 		{
-			//Eliminar unico elemento de la lista
-			pointer->header = NULL;
-			pointer->last = NULL;
-			pointer->index = 0;
+			///borrar elemento i-esimo de la lista.
+			node *aux = pointer->header;
+			while(aux->next != remove)
+			{
+				aux = aux->next;
+			}
+			aux->next = remove->next;
 		}
-		else
-		{
-			//Eliminar ultimo elemento de la lista.
-			//pointer->last = (pointer->last)->previus;
-			(pointer->last)->next = NULL;
-		}
+		pointer->index--;
+		free(remove);
 	}
 }
+
+
+#define typename(x) _Generic((x),                                      \
+							 _Bool                                     \
+							 : "_Bool", unsigned char                  \
+							 : "unsigned char",                        \
+							   char                                    \
+							 : "char", signed char                     \
+							 : "signed char",                          \
+							   short int                               \
+							 : "short int", unsigned short int         \
+							 : "unsigned short int",                   \
+							   int                                     \
+							 : "int", unsigned int                     \
+							 : "unsigned int",                         \
+							   long int                                \
+							 : "long int", unsigned long int           \
+							 : "unsigned long int",                    \
+							   long long int                           \
+							 : "long long int", unsigned long long int \
+							 : "unsigned long long int",               \
+							   float                                   \
+							 : "float", double                         \
+							 : "double",                               \
+							   long double                             \
+							 : "long double", char *                   \
+							 : "pointer to char",                      \
+							   void *                                  \
+							 : "pointer to void", int *                \
+							 : "pointer to int",                       \
+							   default                                 \
+							 : "other", node *                         \
+							 : "pointer to node")
 int main()
 {
 	int inicioComplementarios = 3;
@@ -250,13 +267,21 @@ int main()
 		printf("Ejercicio 1: Crear una lista simple que contenga valores enteros, con una función que agregue elementos ingresados por el usuario.\n\n");
 
 		//Codigo
-		list *numbers = (list *)malloc(sizeof(struct list));
-		for (size_t i = 0; i < 10; i++)
+		vector *numbers = createVector(numbers);
+		for (unsigned short i = 1; i <= 10; i++)
 		{
-			addElementToList(numbers, i + 1);
+			printf("entra al ciclo for para agregar elementos\n\n");
+			addElementToVector(numbers,i);
 			printf("Numero %i agregado a la lista \n",i+1);
+			printf("Indice del vector: %i\n",numbers->index);
 		}
-		removeElementFromList(numbers, 13);
+		printf("Imprimiendo vector...\n");
+		node *aNumber = numbers->header;
+		while (aNumber->next != NULL)
+		{
+			printf("value: %i\n",aNumber->data);
+			aNumber = aNumber->next;
+		}
 	}
 	break;
 	case 2: //Ejercicio 2
