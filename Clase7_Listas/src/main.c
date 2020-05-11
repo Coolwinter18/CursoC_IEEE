@@ -214,7 +214,10 @@ void seekInVector(vector *aVector, int aValue)
 		printf("Caso fallido, no se encontrol el numero buscado.\n");
 	}
 }
-
+/**
+ * @brief Definicion de un tipo multivaluado.
+ * 
+ */
 #define typename(x) _Generic((x),                                      \
 							 _Bool                                     \
 							 : "_Bool", unsigned char                  \
@@ -249,7 +252,7 @@ void seekInVector(vector *aVector, int aValue)
 int main()
 {
 	int inicioComplementarios = 3;
-	int finComplementarios = 3;
+	int finComplementarios = 2;
 	int j = 0;
 	int op = 0;
 	do
@@ -366,15 +369,6 @@ int main()
 	cleanVector(num);
 	}					   //end ejercicio 2
 	break;
-	case 3: //Ejercicio 1 Comp
-	{
-		printf("Ejercicio Comp. Nro 1: Realizar una copia del ejercicio 7.2 (anterior) y modificarlo, añadiendo un puntero extra al struct\n");
-		printf("para poder recorrer la lista en ambas direcciones, e implementar las modificaciones necesarias para que se comporte\n");
-		printf(" como una lista doblemente enlazada circular.\n\n");
-
-		//Codigo
-		printf("Sin Realizar...\n");
-	}
 	default:
 	{
 	}
