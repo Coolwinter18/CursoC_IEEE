@@ -10,13 +10,11 @@ typedef struct node
 {
 	int data;
 	struct node *next;
-	struct node *previous;
 } node;
 
 typedef struct list
 {
 	node *header;
-	node *last;
 	unsigned short index;
 } vector, queue, stack;
 
