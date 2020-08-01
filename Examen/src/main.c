@@ -14,17 +14,38 @@ typedef struct node
 {
 	record data;
 	struct node *next;
-	struct node *previous;
-	int index;
 }node;
 
-void add_node(node *head, record data);
+
+node *new_node()
 {
-	node *tmp = (node*)malloc(sizeof(node));
-	if(head == NULL)
+	node *head = NULL;
+	head = (node*)malloc(sizeof(node));
+	head->next = NULL;
+	return head;
+}
+node *add_node(node *head, record data)
+{
+	node *nuevo_nodo = new_node();
+	nuevo_nodo->data = data;
+	node *aux = head;
+	node *aux2 = NULL;
+	while (aux != NULL && aux->data.director< data.director)
 	{
-		//Lista Vacia - Primer Elemento.
+		aux2 = aux;
+		aux = aux->next;
 	}
+	if (aux == head)
+	{
+		head = nuevo_nodo;
+	}else
+	{
+		aux2->next = nuevo_nodo;		
+	}
+	nuevo_nodo->next = aux;
+	free(aux2);
+	free(aux);
+	return head;
 }
 
 void free_list(node *head)
@@ -65,70 +86,118 @@ void search_movie(node *head, char name[50])
 	}
 	if (tmp == NULL)
 	{
-		printf("Busqueda No exitosa, no se ha encontrado la pelicula con ese nombre.\n");
+		printf("Busqueda No exitosa, no se ha encontrado la pelicula con ese nombre.\n");		
 	}
+}
+
+
+void generate_file(node *head)
+{
+	//Genera el archivo catalogo.txt
+	FILE *fp;
+
+	fp = fopen("catalogo.txt","w");
+	if (fp == NULL)
+	{
+		printf("Error al abrir el archivo");
+		exit(1);
+	}else
+	{
+		node *aux = head;
+		while (aux != NULL)
+		{
+			//Imprime titulo de pelicula
+			char *line[] = "Titulo: "; 
+			fprintf(fp,"%s",line);
+			fprintf(fp,"%s\n",aux->data.titulo);
+			//imprime anio de estreno
+			char *line2[] = "Anio de Estreno: ";
+			fprintf(fp,"%s",line2);
+			fprintf(fp,"%i\n",aux->data.estreno);
+			//Imprime nombre del director y salta una linea para siguiente registro.
+			char *line3[] = "Director: ";
+			fprintf(fp,"%s\n\n",aux->data.director);
+
+			//avanzo al siguiente registro.
+			aux = aux->next;
+		}
+		fclose(fp);
+	}
+	
+	
+
 }
 int ejecutar_ej1()
 {
-	node *lista = NULL;
-	lista = (node*)malloc(sizeof(node));
-	lista->next = NULL;
-	lista->previous = NULL;
-	lista->index = 0;
-	char op_list[][50]={"Agregar Titulo\n","Buscar Titulo\n","Mostrar Titulos\n","Salir y Generar Archivo.\n"};
-	int longitud_op = *(&op_list+1) - op_list;
 	int opcion = 0;
-	for (size_t i = 0; i < longitud_op; i++)
+	do
 	{
-		printf("%i) %s",i+1,op_list[i]);
-	}
-	scanf("%d",&opcion);
-	switch (opcion)
-	{
-		case 1:
+	
+	
+		node *lista = NULL;
+		char op_list[][50]={"Agregar Titulo\n","Buscar Titulo\n","Mostrar Titulos\n","Salir y Generar Archivo.\n"};
+		int longitud_op = *(&op_list+1) - op_list;
+		
+		for (size_t i = 0; i < longitud_op; i++)
 		{
-			//Agregar Nodo
-			record input;
-			printf("Por Favor ingrese:\n");
-			printf("Titulo de la Pelicula\n");
-			scanf("%s",&input.titulo);
-			printf("Anio de Estreno");
-			scanf("%d",&input.estreno);
-			print("Nombre del Director\n");
-			scanf("%s",&input.director);
-			add_node(lista,input);
+			printf("%i) %s",i+1,op_list[i]);
 		}
-		break;
-		case 2:
+		scanf("%d",&opcion);
+		switch (opcion)
 		{
-			//Buscar Pelicula
-			if (lista->index == 0)
+			case 1:
 			{
-				printf("Lo Siento, La lista Se encuentra vacia, agregue un titulo para listar.")
-			}else
-			{
-				char name[50];
-				printf("Ingrese el nombre de la pelicula para buscar\n");
-				scanf("%s",&name);
-				search_movie(lista,name);
+				//Agregar Nodo
+				record input;
+				printf("Por Favor ingrese:\n");
+				printf("Titulo de la Pelicula\n");
+				scanf("%s",&input.titulo);
+				printf("Anio de Estreno");
+				scanf("%d",&input.estreno);
+				print("Nombre del Director\n");
+				scanf("%s",&input.director);
+				lista = add_node(lista,input);
 			}
-			
+			break;
+			case 2:
+			{
+				//Buscar Pelicula
+				if (lista  == NULL)
+				{
+					printf("Lo Siento, La lista Se encuentra vacia, agregue un titulo para listar.");
+				}else
+				{
+					char name[50];
+					printf("Ingrese el nombre de la pelicula para buscar\n");
+					scanf("%s",&name);
+					search_movie(lista,name);
+				}
+				
+			}
+			break;
+			case 3:
+			{
+				//Mostrar Lista
+				display_list(lista);
+			}
+			break;
+		default: 
+			{
+				// Generar archivo, liberar lista y Salir
+				if (lista == NULL)
+				{
+					printf("No se generara ningun archivo ya que no ingreso titulos a la lista.");
+				}else
+				{
+					printf("Generando archivo 'catalogo.txt'...");
+					generate_file(lista);
+					printf("Catalogo generado, saliendo del programa.");
+				}
+				free_list(lista);
+			}
+			break;
 		}
-		break;
-		case 3:
-		{
-			//Mostrar Lista
-			display_list(lista);
-		}
-		break;
-	default: 
-		{
-			// Generar archivo, liberar lista y Salir
-			generate_file(lista);
-			free_list(lista);
-		}
-		break;
-	}
+	}while(opcion != 4);
 	return 1;
 }
 //Estructuras Ejercicio 2
