@@ -201,8 +201,26 @@ int ejecutar_ej1()
 	return 1;
 }
 //Estructuras Ejercicio 2
+typedef struct result
+{
+	char c;
+	int i;
+}result;
+
+result caracteresRepetidos(char *arreglo[],int sizeArreglo)
+{
+	static result sal;
+	///CONTINUAR DESDE ACA
+}
 int ejecutar_ej2()
 {
+	//le pido que ingrese la cadena de caracteres.
+	char *string ;
+	printf("ingrese la cadena de caracteteres a utilizar en la funcion.");
+	fscan("%s",&string);
+	int size = *(&string + 1) - string;
+	result salida = caracteresRepetidos(string,size);
+	printf("el caracter mas repetido consecutivamente es: '%c' un total de '%i' veces",salida.c,salida.i);
 	return 1;
 }
 
