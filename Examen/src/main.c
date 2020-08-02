@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+//----------------------------------------------------------------------------------------------------------------------------------------
 //Estructuras Ejercicio 1
 typedef struct data
 {
@@ -107,15 +108,15 @@ void generate_file(node *head)
 		while (aux != NULL)
 		{
 			//Imprime titulo de pelicula
-			char *line[] = "Titulo: "; 
+			char line[8] = "Titulo: "; 
 			fprintf(fp,"%s",line);
 			fprintf(fp,"%s\n",aux->data.titulo);
 			//imprime anio de estreno
-			char *line2[] = "Anio de Estreno: ";
+			char line2[17] = "Anio de Estreno: ";
 			fprintf(fp,"%s",line2);
 			fprintf(fp,"%i\n",aux->data.estreno);
 			//Imprime nombre del director y salta una linea para siguiente registro.
-			char *line3[] = "Director: ";
+			char line3[10] = "Director: ";
 			fprintf(fp,"%s\n\n",aux->data.director);
 
 			//avanzo al siguiente registro.
@@ -154,7 +155,7 @@ int ejecutar_ej1()
 				scanf("%s",&input.titulo);
 				printf("Anio de Estreno");
 				scanf("%d",&input.estreno);
-				print("Nombre del Director\n");
+				printf("Nombre del Director\n");
 				scanf("%s",&input.director);
 				lista = add_node(lista,input);
 			}
@@ -186,12 +187,12 @@ int ejecutar_ej1()
 				// Generar archivo, liberar lista y Salir
 				if (lista == NULL)
 				{
-					printf("No se generara ningun archivo ya que no ingreso titulos a la lista.");
+					printf("se saldra del programa, y no se generara ningun archivo ya que no hay catalogos en la lista.\n");
 				}else
 				{
-					printf("Generando archivo 'catalogo.txt'...");
+					printf("Generando archivo 'catalogo.txt'...\n");
 					generate_file(lista);
-					printf("Catalogo generado, saliendo del programa.");
+					printf("Catalogo generado, saliendo del programa.\n");
 				}
 				free_list(lista);
 			}
@@ -200,35 +201,113 @@ int ejecutar_ej1()
 	}while(opcion != 4);
 	return 1;
 }
+//----------------------------------------------------------------------------------------------------------------------------------------
 //Estructuras Ejercicio 2
+
+
 typedef struct result
 {
 	char c;
 	int i;
 }result;
 
-result caracteresRepetidos(char *arreglo[],int sizeArreglo)
+result caracteresRepetidos(char arreglo[255])
 {
-	static result sal;
-	///CONTINUAR DESDE ACA
+	result sal;
+	int i = 0;
+	char c = arreglo[0];
+	int index = 0;
+	int max = 0;
+	int max_index = 0; 
+	while(arreglo[index] != '\0')
+	{
+		if(arreglo[index] == c)
+		{
+			i++;
+			if (i > max)
+			{
+				max = i;
+				max_index = index;
+			}
+			
+		}else
+		{
+			i = 1;
+			c = arreglo[index];
+		}
+		index++;
+	}
+	sal.i = max;
+	sal.c = arreglo[max_index];
+	return sal;
 }
 int ejecutar_ej2()
 {
 	//le pido que ingrese la cadena de caracteres.
-	char *string ;
-	printf("ingrese la cadena de caracteteres a utilizar en la funcion.");
-	fscan("%s",&string);
-	int size = *(&string + 1) - string;
-	result salida = caracteresRepetidos(string,size);
-	printf("el caracter mas repetido consecutivamente es: '%c' un total de '%i' veces",salida.c,salida.i);
+	char string[255] ;
+	printf("ingrese la cadena de caracteteres a utilizar en la funcion.\n");
+	scanf("%s",&string);
+	//int size = *(&string + 1) - string;
+	result salida = caracteresRepetidos(string);
+	printf("el caracter mas repetido consecutivamente es: '%c' un total de '%i' veces\n",salida.c,salida.i);
 	return 1;
+}
+//----------------------------------------------------------------------------------------------------------------------------------------
+//Estructuras Ejercicio 3
+
+
+//CALCULA E IMPRIME LOS PRIMEROS N TERMINOS DE LA SERIE DE FIBONACCI.
+int main_ejercicio3()
+{
+	//entero, i, n, t1 = 0, t2 = 1, nextTerm; 		error de tipo de dato, se define 'entero' como 'int'
+	int i, n, t1 = 0, t2 = 1, nextTerm;
+	printf("Ingrese el numero de terminos: ");
+	//scanf("%d", n);								falta el signo & ampersan para que el dato se guarde en n
+	scanf("%d",&n);
+	printf("Serie de Fibonacci: ");
+	//for (i = 1; i <= n; ++i);						el factor de incremento es i++ no ++i.
+	for (i = 1; i<=n; i++)
+	{
+		//printf("%d, ", t1);						error de sintaxis, la coma va despues de la comilla.
+		printf("%d",t1);
+		
+		nextTerm = t1 + t2;
+		t1 = t2;
+		t2 = nextTerm;
+	}
+	return 0;
 }
 
-//Estructuras Ejercicio 3
-int ejecutar_ej3()
+
+//SE SUPONEN LAS SIGUIENTES ESTRUCTURAS PARA EL ALGORITMO.
+typedef struct tnodo
 {
-	return 1;
+	int valor;
+	struct tnodo *sig;
+}tnodo;
+typedef tnodo *tpuntero;
+
+//AGREGA UN NODO CON UN DATO,EN LA CABECERA DE LA LISTA.
+void insertarEnLista (tpuntero aux, int e)
+{
+	//tpuntero nuevo; 														falta el  '*' para definir el puntero.
+	tpuntero nuevo;
+	//nuevo = malloc(“nuevo->NULL”); // nuevo = malloc(sizeof(tnodo)); 		el primero esta mal y el segundo incompleto. 
+	nuevo = (tpuntero)malloc(sizeof(tnodo));
+	nuevo->valor = e;
+	nuevo->sig = NULL;
+	aux->sig = nuevo;
 }
+
+void ejecutar_ej3()
+{
+	printf("se intentara ejecutar la funcion main.");
+	main_ejercicio3();
+	printf("se intentara ejecutar la carga de lista vacia, el valor 10.");
+	tpuntero test= NULL;
+	insertarEnLista(test, 10);
+};
+
 int main()
 {
 	int select = 0;
@@ -239,19 +318,14 @@ int main()
 	{
 		printf("%i) Ejercicio de %s",i+1,op[i]);
 	}
-	printf("%i) Salir.",longitud+1);
+	printf("%i) Salir.\n",longitud+1);
 	scanf("%d",&select);
 	switch (select)
 	{
 		case 1:
 		{
 			//Ejecutar Ejercicio 1 de Listas
-			
-			while (true)
-			{
 				ejecutar_ej1();
-			}
-			
 		}
 		break;
 		case 2:
